@@ -21,11 +21,10 @@ export interface FetchNotesResponse {
 
 // Base API configuration
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const notesEndpoint = `${API_BASE_URL}/notes`;
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 const notesApi = axios.create({
-        baseURL: notesEndpoint,
+        baseURL: API_BASE_URL,
         headers: {
             Authorization: `Bearer ${token}`,
         }
@@ -41,18 +40,18 @@ export const fetchNotes = async (
         perPage: params.perPage,
         search: params.search,
     };
-
-    const response: AxiosResponse<FetchNotesResponse> = await notesApi.get("", {params: requestParams,});
+    console.log("notesApi headers: ", notesApi.defaults.baseURL);
+    const response: AxiosResponse<FetchNotesResponse> = await notesApi.get("/notes", {params: requestParams,});
     return response.data;
 };
 
 export const createNote = async (note: NoteFormData): Promise<Note> => {
-    const response: AxiosResponse<Note> = await notesApi.post("", note);
+    const response: AxiosResponse<Note> = await notesApi.post("/notes", note);
     return response.data;
 };
 
 export const deleteNote = async (id: string): Promise<Note> => {
-    const response: AxiosResponse<Note> = await notesApi.delete(`/${id}`);
+    const response: AxiosResponse<Note> = await notesApi.delete(`/notes/${id}`);
     return response.data;
 };
 
