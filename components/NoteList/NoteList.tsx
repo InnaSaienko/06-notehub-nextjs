@@ -3,6 +3,7 @@ import css from "./NoteList.module.css"
 import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {deleteNote} from "@/lib/api";
+import Link from "next/link";
 
 interface NoteListProps {
     notes: Note[];
@@ -29,9 +30,13 @@ const NoteList = ({notes}: NoteListProps) => {
                 <p className={css.content}>{note.content}</p>
                 <div className={css.footer}>
                     <span className={css.tag}>{note.tag}</span>
-                    <button className={css.button}
-                            disabled={deletingId === note.id}
-                            onClick={() => deleteNoteMutation.mutate(note.id)}
+                    <Link href={`/notes/${note.id}`} className={css.link}>
+                        View details
+                    </Link>
+                    <button
+                        className={css.button}
+                        onClick={() => deleteNoteMutation.mutate(note.id)}
+                        disabled={deletingId === note.id}
                     >
                         Delete
                     </button>
