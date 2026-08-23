@@ -40,12 +40,17 @@ export const fetchNotes = async (
         perPage: params.perPage,
         search: params.search,
     };
-    console.log("notesApi headers: ", notesApi.defaults.baseURL);
     const response: AxiosResponse<FetchNotesResponse> = await notesApi.get("/notes", {params: requestParams,});
     return response.data;
 };
 
+export const fetchNoteById = async (id: string): Promise<Note> => {
+    const response = await notesApi.get(`/notes/${id}`);
+    return response.data
+}
+
 export const createNote = async (note: NoteFormData): Promise<Note> => {
+    console.log("New note data: ", note);
     const response: AxiosResponse<Note> = await notesApi.post("/notes", note);
     return response.data;
 };
