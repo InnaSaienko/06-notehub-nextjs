@@ -96,13 +96,12 @@ const NoteForm = ({onSuccessSubmit}: NoteFormProps) => {
                     </div>
 
                     <div className={css.actions}>
-                        <button type="button" className={css.cancelButton}>
+                        <button type="button" className={css.cancelButton} onClick={onSuccessSubmit}>
                             Cancel
                         </button>
                         <button
                             type="submit"
                             className={css.submitButton}
-                            onClick={onSuccessSubmit}
                             disabled={isSubmitting || !isValid}
                         >
                             Create note
